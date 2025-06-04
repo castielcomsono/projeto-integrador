@@ -1,20 +1,20 @@
 <?php
     //criar uma classe
 
-    class CadClientes{
+    class cadfornecedor{
 
-        public $nome;
-        public $idade;
-        public $nascimento;
-        public $sexo;
+        public $razaosocial;
+        public $nomefantasia;
+        public $cnpj;
         public $cpf;
         public $email;
+        public $site;
         public $telefone;
         public $cep;
-        public $endereco;
-        public $estado;
+        public $end;
         public $bairro;
         public $cidade;
+        public $estado;
         private $conexao;
         private $id;
 
@@ -28,25 +28,25 @@
 
         }
 
-        public function cadastrar($nome, $idade,$nascimento,$sexo,$cpf,$email,$telefone,$cep,$endereco,$bairro,$cidade,$estado){
+        public function cadastrar($razaosocial, $nomefantasia, $cnpj, $cpf, $email, $site, $telefone, $cep, $end, $bairro, $cidade, $estado){
             
-            $this->nome = $nome;
-            $this->idade = $idade;
-            $this->nascimento = $nascimento;
-            $this->sexo = $sexo;
+            $this->razaosocial = $razaosocial;
+            $this->nomefantasia = $nomefantasia;
+            $this->cnpj = $cnpj;
             $this->cpf = $cpf;
             $this->email = $email;
+            $this->site = $site;
             $this->telefone = $telefone;
             $this->cep = $cep;
-            $this->endereco = $endereco;
+            $this->end = $end;
             $this->bairro = $bairro;
             $this->cidade = $cidade;
             $this->estado = $estado;
 
             //a funcao prepare, prepara algum comando do mysql, ou de outro sgbd.
-            $sql = $this->conexao->prepare("INSERT INTO cadastro_clientes(NOME,IDADE,NASCIMENTO,SEXO,CPF,EMAIL,TELEFONE,CEP,ENDERECO,BAIRRO,CIDADE,ESTADO,DATA,HORA)
+            $sql = $this->conexao->prepare("INSERT INTO cadastro_fornecedor(RAZAO_SOCIAL,NOME_FANTASIA,CNPJ,CPF,EMAIL,SITE,TELEFONE,CEP,ENDERECO,BAIRRO,CIDADE,ESTADO,DATA,HORA)
             
-            VALUES('$this->nome','$this->idade','$this->nascimento','$this->sexo','$this->cpf','$this->email','$this->telefone','$this->cep','$this->endereco','$this->bairro','$this->cidade','$this->estado',NOW(),NOW())");
+            VALUES('$this->razaosocial','$this->nomefantasia','$this->cnpj','$this->cpf','$this->email','$this->site','$this->telefone','$this->cep','$this->end','$this->bairro','$this->cidade','$this->estado',NOW(),NOW())");
 
             
             
@@ -68,16 +68,16 @@
         {
                 $this->id = $id;
                 
-                $sql = $this->conexao->prepare("DELETE FROM cadastro_clientes WHERE ID = $this->id");
+                $sql = $this->conexao->prepare("DELETE FROM cadastro_fornecedor WHERE ID = $this->id");
                 
                 $sql->execute();
 
                 if($sql->rowCount() > 0){
-                    echo "Cliente deletado com sucesso";
+                    echo "Fornecedor deletado com sucesso";
                 }
                 
                 else{
-                    echo "Erro: Não foi possivel deletar o cliente";
+                    echo "Erro: Não foi possivel deletar o fornecedor";
                 }
         }
 
@@ -86,7 +86,7 @@
         }
 
         public function Lista(){
-            $sql = $this->conexao->prepare("SELECT ID,NOME,IDADE,SEXO,CPF,EMAIL,TELEFONE,ENDERECO from cadastro_clientes");//prepara o comando sql.
+            $sql = $this->conexao->prepare("SELECT ID,RAZAO_SOCIAL,NOME_FANTASIA,CNPJ,EMAIL,TELEFONE,ENDERECO from cadastro_fornecedor");//prepara o comando sql.
             $sql->execute();
 
             $dados = $sql->fetchAll();//busca todas as listas que o select exibe, e exibe em forma de tabela.
@@ -95,16 +95,15 @@
                 
                 echo "
                 <tr>
-                    <td>$item[NOME]</td>
-                    <td>$item[IDADE]</td>
-                    <td>$item[SEXO]</td>
-                    <td>$item[CPF]</td>
+                    <td>$item[RAZAO_SOCIAL]</td>
+                    <td>$item[NOME_FANTASIA]</td>
+                    <td>$item[CNPJ]</td>
                     <td>$item[EMAIL]</td>
                     <td>$item[TELEFONE]</td>
                     <td>$item[ENDERECO]</td>
                     <td>
                         <i class='bi bi-trash-fill'onclick='Excluir($item[ID]);'></i>
-                        <i class='bi bi-pencil-square' data-bs-toggle='modal' data-bs-target='#editarmarcas' onclick='Mostrar($item[ID]);'></i>
+                        <i class='bi bi-pencil-square'></i>
                     </td>
                         
                 </tr>

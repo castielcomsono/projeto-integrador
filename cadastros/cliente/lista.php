@@ -38,6 +38,45 @@
         </tbody>
     </table>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editarclientes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Marcas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+        <div class="modal-body">
+            <label for="">ID</label class="form-label">
+            <input type="text" name="id" id="id" disabled class="form-control">
+            <label for="">Nome</label class="form-label">
+            <input type="text" name="nome" id="nome" class="form-control">
+            <label for="">Idade</label class="form-label">
+            <input type="number" name="idade" id="idade" class="form-control">
+            <label for="">Sexo</label class="form-label">
+            <select name="sexo" id="sexo">
+                <option value=""></option>
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+            <label for="">CPF</label class="form-label">
+            <input type="text" name="cpf" id="cpf" class="form-control">
+            <label for="">E-mail</label class="form-label">
+            <input type="email" name="email" id="email" class="form-control">
+            <label for="">Telefone</label class="form-label">
+            <input type="tel" name="telefone" id="telefone" class="form-control">
+            <label for="">Endereço</label class="form-label">
+            <input type="text" name="end" id="end" class="form-control">
+        </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
 
@@ -46,10 +85,37 @@
         $.ajax({
             url:"enviar.php",
             type:"post",
-            data:{id: id},
+            data:
+            {id: id,
+            acao: 'Excluir'
+            },
             success: function(resposta){
                 alert(resposta);
             }
-        })
+        });
+    }
+
+    function Mostrar(id)
+    {
+        $.ajax({
+            url:"enviar.php",
+            dataType:'json',
+            type:"post",
+            data:{
+                id : id,
+                acao : 'Alterar'
+            },
+            success: function(resposta){
+
+                $('#id').val(resposta[0].ID);
+                $('#nome').val(resposta[0].NOME);
+                $('#idade').val(resposta[0].IDADE);
+                $('#sexo').val(resposta[0].SEXO);
+                $('#cpf').val(resposta[0].CPF);
+                $('#email').val(resposta[0].EMAIL);
+                $('#telefone').val(resposta[0].TELEFONE);
+                $('#end').val(resposta[0].ENDERECO);
+            }
+        });
     }
 </script>
