@@ -22,7 +22,7 @@
                 <th>Opções</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="dados">
         <?php
             //Chamar o arquivo class.php
             include_once 'class.php';
@@ -59,7 +59,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-primary" onclick="alteracao();" data-bs-dismiss="modal">Salvar</button>
       </div>
     </div>
   </div>
@@ -91,14 +91,38 @@
             type:"post",
             data:{
                 id : id,
-                acao : 'Alterar'
+                acao : 'mostrar'
             },
             success: function(resposta){
 
                 $('#id').val(resposta[0].ID);
                 $('#marca').val(resposta[0].NOME);
                 $('#fabricante').val(resposta[0].FABRICANTE);
-                
+
+            }
+        });
+    }
+
+   
+
+</script>
+
+
+<script>
+     function alteracao(){
+
+      
+        $.ajax({
+            url:'enviar.php',
+            type:'post',
+            data:{
+                id : $('#id').val(),
+                marca : $('#marca').val(),
+                fabricante : $('#fabricante').val(),
+                acao : 'confirmar'
+            },
+            success:function(resposta){
+                $('#dados').html(resposta);
             }
         });
     }

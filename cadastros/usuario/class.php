@@ -2,11 +2,13 @@
 
 <?php
 
-class Cadmarcas
+class Cadusuario
 {
     //atributos
     public $nome;
-    public $fabricante;
+    public $email;
+    public $nivel;
+    public $senha;
     private $conexao;
     private $id;
 
@@ -17,22 +19,24 @@ class Cadmarcas
     }
 
     //Métodos
-    public function Cadastrar(string $nome, string $fabricante)
+    public function Cadastrar(string $nome, string $email, string $nivel, string $senha)
     {
         $this->nome = $nome;
-        $this->fabricante = $fabricante;
+        $this->email = $email;
+        $this->nivel = $nivel;
+        $this->senha = $senha;
 
         $sql = $this->conexao->prepare("INSERT INTO
-        cadastro_marcas(NOME,FABRICANTE,DATA,HORA)
-        VALUES ('$this->nome','$this->fabricante',NOW(),NOW())");
+        cadastro_usuarios(USUARIO,EMAIL,NIVEL,SENHA,DATA,HORA)
+        VALUES ('$this->nome','$this->email','$this->nivel','$this->senha',NOW(),NOW())");
         
         $sql->execute();
 
         if($sql->rowCount() > 0){
-            echo "Cadastro realizado com sucesso";
+            echo "<h3>Cadastro realizado com sucesso</h3>";
         }
         else{
-            echo "Erro: Não foi possivel cadastrar a marca";
+            echo "<h3>Erro: Não foi possivel cadastrar o usuário</h3>";
         }
         
     }
@@ -40,25 +44,27 @@ class Cadmarcas
     public function Excluir(int $id)
     {
         $this->id = $id;
-        $sql = $this->conexao->prepare("DELETE FROM cadastro_marcas WHERE ID = $this->id");
+        $sql = $this->conexao->prepare("DELETE FROM cadastro_usuarios WHERE ID = $this->id");
         $sql->execute();
 
         if($sql->rowCount() > 0){
-            echo "Marca deletada com sucesso";
+            echo "Usuário deletado com sucesso";
         }
         else{
-            echo "Erro: Não foi possivel deletar a marca";
+            echo "Erro: Não foi possivel deletar o usuário";
         }
     }
 
-    public function Alterar(int $id, string $marca, string $fabricante)
+   public function Alterar(int $id, string $nome, string $email, string $nivel)
     {
         $this->id = $id;
-        $this->nome = $marca;
-        $this->fabricante = $fabricante;
+        $this->nome = $nome;
+        $this->email = $email;
+        $this->nivel = $nivel;
 
-        $sql = $this->conexao->prepare("UPDATE cadastro_marcas SET NOME = '$this->nome',
-                                                                   FABRICANTE = '$this->fabricante'
+        $sql = $this->conexao->prepare("UPDATE cadastro_usuarios SET USUARIO = '$this->nome',
+                                                                   EMAIL = '$this->email',
+                                                                   NIVEL = '$this->nivel',
                                                                    WHERE
                                                                    ID = '$this->id'");
                                                                    
@@ -67,7 +73,7 @@ class Cadmarcas
 
     public function Lista()
     {
-        $sql = $this->conexao->prepare("SELECT ID,NOME,FABRICANTE FROM cadastro_marcas");
+        $sql = $this->conexao->prepare("SELECT ID,USUARIO,EMAIL,NIVEL FROM cadastro_usuarios");
         $sql->execute();
         $dados = $sql->fetchAll();
         //Percorrer o array
@@ -76,8 +82,9 @@ class Cadmarcas
             echo "
             
                 <tr>
-                    <td>$item[NOME]</td>
-                    <td>$item[FABRICANTE]</td>
+                    <td>$item[USUARIO]</td>
+                    <td>$item[EMAIL]</td>
+                    <td>$item[NIVEL]</td>
                     <td>
                     <i class='bi bi-trash-fill'onclick='Excluir($item[ID]);'></i>
                     <i class='bi bi-pencil-square' data-bs-toggle='modal' data-bs-target='#editarmarcas' onclick='Mostrar($item[ID]);'></i>
@@ -87,6 +94,11 @@ class Cadmarcas
             
             ";
         }
+    }
+
+    public function Procurar(int $id)
+    {
+        
     }
 
 }
