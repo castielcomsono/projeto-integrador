@@ -87,7 +87,7 @@ class Cadusuario
                     <td>$item[NIVEL]</td>
                     <td>
                     <i class='bi bi-trash-fill'onclick='Excluir($item[ID]);'></i>
-                    <i class='bi bi-pencil-square' data-bs-toggle='modal' data-bs-target='#editarmarcas' onclick='Mostrar($item[ID]);'></i>
+                    <i class='bi bi-pencil-square' data-bs-toggle='modal' data-bs-target='#editarusuario' onclick='Mostrar($item[ID]);'></i>
                     </td>
                     
                 </tr>
