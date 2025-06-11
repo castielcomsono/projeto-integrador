@@ -11,32 +11,37 @@ class Atendimento
     private $usuario;
     //funções
 
-    public function __construct()
-    {
-        include_once '../../conexao/conexao.php';
-        $this->conexao = $conexao;
-    }
+     public function __construct()//essa funcao eh automatica, nao precisa chamar ela toda vez.
+        {
 
-    public function cadastrar(string $protocolo, string $cliente, string $descricao, int $id, string $usuario)
+            $connexao = new PDO('mysql:dbname=estoquee;host=localhost','root','');
+            $this->conexao = $connexao;
+
+        }
+
+    public function cadastrar($protocolo, $cliente, $descricao)
     {
+       
         $this->protocolo = $protocolo;
         $this->cliente = $cliente;
         $this->descricao = $descricao;
-        $this->id = $id;
-        $this->usuario = $usuario;
-        $this->conexao = $conexao;
 
-        $sql = $this->conexao->prepare("INSERT INTO atendimento(PROTOCOLO,CLIENTE,DESCRICAO,DATA,HORA,USUARIO)
-                                        VALUES ('$this->protocolo','$this->cliente','$this->descricao',NOW(),NOW(),'$this->usuario')");
+       $sql = $this->conexao->prepare("INSERT INTO atendimento(PROTOCOLO,CLIENTE,DESCRICAO) 
+       
+       VALUES 
+       
+       ('$this->protocolo','$this->cliente','$this->descricao')");
         
         $sql->execute();
 
         if($sql->rowCount() > 0){
-            echo "Atendimento realizado com sucesso!";
-        }
-        else{
-            echo "Erro: Não foi possivel concluir seu atendimento.";
-        }
+                echo "<br>
+                <h3>Atendimento realizado com sucesso</h3>";
+            }
+            else{
+                echo "<br>
+                <h3>Erro: não foi possivel realizar o atendimento</h3>";
+            }
     }
 
     public function mostrarclientes()

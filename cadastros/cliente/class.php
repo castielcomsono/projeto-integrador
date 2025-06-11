@@ -81,8 +81,19 @@
                 }
         }
 
-        public function alterar(){
-        
+        public function Alterar(int $id, string $nome, int $idade, string $sexo, string $cpf, string $email, string $telefone, string $endereco){
+        $this->id = $id;
+        $this->nome = $nome;
+        $this->idade = $idade;
+        $this->sexo = $sexo;
+        $this->cpf = $cpf;
+        $this->email = $email;
+        $this->telefone = $telefone;
+        $this->endereco = $endereco;
+
+        $sql = $this->conexao->prepare("UPDATE cadastro_clientes SET NOME = '$this->nome', IDADE = '$this->idade',SEXO = '$this->sexo',CPF = '$this->cpf',EMAIL = '$this->email',TELEFONE = '$this->telefone',ENDERECO = '$this->endereco' WHERE ID = '$this->id'");
+                                                                   
+        $sql->execute();
         }
 
         public function Lista(){
@@ -104,7 +115,7 @@
                     <td>$item[ENDERECO]</td>
                     <td>
                         <i class='bi bi-trash-fill'onclick='Excluir($item[ID]);'></i>
-                        <i class='bi bi-pencil-square' data-bs-toggle='modal' data-bs-target='#editarmarcas' onclick='Mostrar($item[ID]);'></i>
+                        <i class='bi bi-pencil-square' data-bs-toggle='modal' data-bs-target='#editarclientes' onclick='Mostrar($item[ID]);'></i>
                     </td>
                         
                 </tr>

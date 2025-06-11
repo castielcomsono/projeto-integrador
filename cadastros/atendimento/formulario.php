@@ -1,3 +1,5 @@
+<?php include_once 'class.php'; ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -27,10 +29,11 @@
             <div class="row  mb-2">
                 <div class="col-md-6">
                     <label for="" class="form-label">Cliente<span class="text-danger">*</span></label>
+                    
                     <select name="cliente" class="form-select">
 
                         <?php
-                            include_once 'class.php';
+                            
                             $clientes = new Atendimento();
                             $clientes->mostrarclientes();
                         ?>
@@ -57,9 +60,14 @@
 
 <?php
 
+
+
 if(isset($_POST['salvar'])){
+
+   
     $atendimento = new Atendimento();
     $atendimento->cadastrar($_POST['protocolo'],$_POST['cliente'],$_POST['descricao']);
+    
 }
 
 ?>

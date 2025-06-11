@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=div, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <title>Lista de Clientes</title>
 </head>
@@ -26,7 +27,7 @@
                 <th>Opções</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="dados">
         <?php
             //Chamar o arquivo class.php
             include_once 'class.php';
@@ -44,7 +45,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Marcas</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Cliente</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
         <div class="modal-body">
@@ -55,7 +56,7 @@
             <label for="">Idade</label class="form-label">
             <input type="number" name="idade" id="idade" class="form-control">
             <label for="">Sexo</label class="form-label">
-            <select name="sexo" id="sexo">
+            <select name="sexo" id="sexo" class="form-select">
                 <option value=""></option>
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
@@ -71,7 +72,7 @@
         </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="alteracao();">Salvar</button>
                 </div>
             </div>
         </div>
@@ -115,6 +116,31 @@
                 $('#email').val(resposta[0].EMAIL);
                 $('#telefone').val(resposta[0].TELEFONE);
                 $('#end').val(resposta[0].ENDERECO);
+            }
+        });
+    }
+    </script>
+
+    <script>
+     function alteracao(){
+
+      
+        $.ajax({
+            url:'enviar.php',
+            type:'post',
+            data:{
+                id : $('#id').val(),
+                nome : $('#nome').val(),
+                idade : $('#idade').val(),
+                sexo : $('#sexo').val(),
+                cpf : $('#cpf').val(),
+                email : $('#email').val(),
+                telefone : $('#telefone').val(),
+                endereco : $('#end').val(),
+                acao : 'confirmar'
+            },
+            success:function(resposta){
+                $('#dados').html(resposta);
             }
         });
     }

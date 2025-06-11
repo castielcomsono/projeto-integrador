@@ -23,4 +23,18 @@ elseif($_POST['acao'] == 'Alterar')
 
 }
 
+elseif($_POST['acao'] == 'confirmar')
+{
+    include_once 'class.php';
+    // criar um objeto
+    $item = new CadClientes();
+    //acessando o metodo e passando os valores
+    $item->Alterar($_POST['id'], $_POST['nome'], $_POST['idade'],$_POST['sexo'], $_POST['cpf'], $_POST['email'], $_POST['telefone'], $_POST['endereco'] );
+
+    $item->Lista();
+
+
+    
+}
+
 ?>
