@@ -20,11 +20,10 @@
 
         #metodos / funcoes#
 
-        public function __construct()//essa funcao eh automatica, nao precisa chamar ela toda vez.
+        public function __construct()
         {
-
-            include_once "../../conexao/conexao.php";
-            $this->conexao = $conexao;
+            $connexao = new PDO('mysql:dbname=estoquee;host=localhost','root','');
+            $this->conexao = $connexao;
 
         }
 

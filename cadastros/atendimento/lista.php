@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=div, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <title>Lista de Atendimentos</title>
 </head>
@@ -22,7 +23,7 @@
                 <th>Opções</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="dados">
         <?php
             //Chamar o arquivo class.php
             include_once 'class.php';
@@ -34,6 +35,44 @@
         </tbody>
     </table>
     </div>
+
+    <!-- Modal -->
+<div class="modal fade" id="editaratendimento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Atendimentos</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="">ID</label class="form-label">
+        <input type="text" name="id" id="id" disabled class="form-control">
+        <label for="">Protocolo</label class="form-label">
+        <input type="text" name="protocolo" id="protocolo" class="form-control">
+        <label for="">Cliente</label class="form-label">
+        <select name="cliente" class="form-select">
+        <?php                  
+        $clientes = new Atendimento();
+        $clientes->mostrarclientes();
+        ?>
+                    </select>
+        <label for="">Descrição</label class="form-label">
+        <input type="text" name="descricao" id="descricao" class="form-control">
+
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="alteracao();" data-bs-dismiss="modal">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
 
@@ -42,10 +81,52 @@
         $.ajax({
             url:"enviar.php",
             type:"post",
-            data:{id: id},
+            data:{id: id,
+                acao : 'Excluir'},
             success: function(resposta){
                 alert(resposta);
             }
         })
+    }
+
+    function Mostrar(id)
+    {
+        $.ajax({
+            url:"enviar.php",
+            dataType:'json',
+            type:"post",
+            data:{
+                id : id,
+                acao : 'Alterar'
+            },
+            success: function(resposta){
+
+                $('#id').val(resposta[0].ID);
+                $('#protocolo').val(resposta[0].PROTOCOLO);
+                $('#cliente').val(resposta[0].CLIENTE);
+                $('#descricao').val(resposta[0].DESCRICAO);
+            }
+        });
+    }
+</script>
+
+ <script>
+     function alteracao(){
+
+      
+        $.ajax({
+            url:'enviar.php',
+            type:'post',
+            data:{
+                id : $('#id').val(),
+                protocolo : $('#protocolo').val(),
+                cliente : $('#cliente').val(),
+                descricao : $('#descricao').val(),
+                acao : 'confirmar'
+            },
+            success:function(resposta){
+                $('#dados').html(resposta);
+            }
+        });
     }
 </script>

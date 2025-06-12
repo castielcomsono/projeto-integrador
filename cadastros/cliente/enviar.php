@@ -12,10 +12,11 @@ $itens->Excluir($id);
 
 elseif($_POST['acao'] == 'Alterar')
 {
+
     include_once '../../conexao/conexao.php';
-   
+    
     $id = $_POST['id'];
-    $sql = $conexao->prepare("SELECT ID,NOME,IDADE,SEXO,CPF,EMAIL,TELEFONE,ENDERECO FROM cadastro_clientes WHERE ID = '$id' ");
+    $sql = $connexao->prepare("SELECT ID,NOME,IDADE,SEXO,CPF,EMAIL,TELEFONE,ENDERECO FROM cadastro_clientes WHERE ID = '$id' ");
     $sql->execute();
     $dados = $sql->fetchAll();
     

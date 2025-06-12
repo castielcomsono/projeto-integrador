@@ -58,7 +58,7 @@ class Atendimento
         }
     }
 
-    public function excluir()
+    public function Excluir(int $id)
     {
         $this->id = $id;
         $sql = $this->conexao->prepare("DELETE FROM atendimento WHERE ID = $this->id");
@@ -88,7 +88,7 @@ class Atendimento
                     <td>$item[DESCRICAO]</td>
                     <td>
                         <i class='bi bi-trash-fill'onclick='Excluir($item[ID]);'></i>
-                        <i class='bi bi-pencil-square'></i>
+                        <i class='bi bi-pencil-square' data-bs-toggle='modal' data-bs-target='#editaratendimento' onclick='Mostrar($item[ID]);'></i>
                     </td>
                         
                 </tr>
@@ -97,9 +97,20 @@ class Atendimento
             }
     }
 
-    public function alterar()
+    public function Alterar(int $id, string $protocolo, string $cliente, string $descricao)
     {
+        $this->id = $id;
+        $this->protocolo = $protocolo;
+        $this->cliente = $cliente;
+        $this->descricao = $descricao;
 
+        $sql = $this->conexao->prepare("UPDATE atendimento SET PROTOCOLO = '$this->protocolo',
+                                                                   CLIENTE = '$this->cliente',
+                                                                   DESCRICAO = '$this->descricao'
+                                                                   WHERE
+                                                                   ID = '$this->id'");
+                                                                   
+        $sql->execute();
     }
 
 

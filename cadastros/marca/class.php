@@ -12,8 +12,8 @@ class Cadmarcas
 
     public function __construct()
     {
-        include_once '../../conexao/conexao.php';
-        $this->conexao = $conexao;
+        $connexao = new PDO('mysql:dbname=estoquee;host=localhost','root','');
+        $this->conexao = $connexao;
     }
 
     //Métodos

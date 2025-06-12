@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=div, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <title>Lista de Usuários</title>
 </head>
@@ -52,7 +53,7 @@
             <label for="">E-mail</label class="form-label">
             <input type="email" name="email" id="email" class="form-control">
             <label for="">Nível</label class="form-label">
-            <select name="nivel" id="nivel">
+            <select name="nivel" class="form-select" id="nivel">
                 <option value=""></option>
                 <option value="Operador">Operador</option>
                 <option value="Administrador">Administrador</option>

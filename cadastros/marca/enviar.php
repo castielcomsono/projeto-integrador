@@ -17,7 +17,7 @@ elseif($_POST['acao'] == 'mostrar')
     include_once '../../conexao/conexao.php';
    
     $id = $_POST['id'];
-    $sql = $conexao->prepare("SELECT ID,NOME,FABRICANTE FROM cadastro_marcas WHERE ID = '$id' ");
+    $sql = $connexao->prepare("SELECT ID,NOME,FABRICANTE FROM cadastro_marcas WHERE ID = '$id' ");
     $sql->execute();
     $dados = $sql->fetchAll();
     

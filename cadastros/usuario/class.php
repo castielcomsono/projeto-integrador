@@ -14,8 +14,8 @@ class Cadusuario
 
     public function __construct()
     {
-        include_once '../../conexao/conexao.php';
-        $this->conexao = $conexao;
+        $connexao = new PDO('mysql:dbname=estoquee;host=localhost','root','');
+        $this->conexao = $connexao;
     }
 
     //Métodos
@@ -48,11 +48,12 @@ class Cadusuario
         $sql->execute();
 
         if($sql->rowCount() > 0){
-            echo "Usuário deletado com sucesso";
-        }
-        else{
-            echo "Erro: Não foi possivel deletar o usuário";
-        }
+                    echo "Usuário deletado com sucesso";
+                }
+                
+                else{
+                    echo "Erro: Não foi possivel deletar o usuário";
+                }
     }
 
    public function Alterar(int $id, string $nome, string $email, string $nivel)
